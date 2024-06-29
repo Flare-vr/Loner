@@ -1,0 +1,113 @@
+[gd_scene load_steps=13 format=3 uid="uid://oiwh8s2rjesx"]
+
+[ext_resource type="Script" path="res://Scripts/trumpControl.gd" id="1_mtyfc"]
+[ext_resource type="Texture2D" uid="uid://d6nkt7dv30yy" path="res://Assets/gamePrompt.png" id="1_tdyqm"]
+[ext_resource type="Texture2D" uid="uid://blfij1id31rqu" path="res://Assets/Suits.png" id="2_tvidc"]
+[ext_resource type="Texture2D" uid="uid://xys05ui3cq4o" path="res://Assets/rope.png" id="3_nep4o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0suk"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu42s"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xsils"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7l30"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lp5g"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4iqe4"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y4fo"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0bsu"]
+atlas = ExtResource("2_tvidc")
+region = Rect2(96, 32, 32, 32)
+
+[node name="Control" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mtyfc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(64, 24)
+texture = ExtResource("1_tdyqm")
+
+[node name="heartButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 0
+offset_top = 3.0
+offset_right = 32.0
+offset_bottom = 35.0
+texture_normal = SubResource("AtlasTexture_w0suk")
+texture_pressed = SubResource("AtlasTexture_bu42s")
+
+[node name="dimondButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 32.0
+offset_top = 3.0
+offset_right = 64.0
+offset_bottom = 35.0
+texture_normal = SubResource("AtlasTexture_xsils")
+texture_pressed = SubResource("AtlasTexture_k7l30")
+
+[node name="clubButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 64.0
+offset_top = 3.0
+offset_right = 96.0
+offset_bottom = 35.0
+texture_normal = SubResource("AtlasTexture_7lp5g")
+texture_pressed = SubResource("AtlasTexture_4iqe4")
+
+[node name="spadeButton" type="TextureButton" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 95.0
+offset_top = 3.0
+offset_right = 127.0
+offset_bottom = 35.0
+texture_normal = SubResource("AtlasTexture_6y4fo")
+texture_pressed = SubResource("AtlasTexture_u0bsu")
+
+[node name="rope1" type="Sprite2D" parent="."]
+position = Vector2(109, -14)
+texture = ExtResource("3_nep4o")
+
+[node name="rope3" type="Sprite2D" parent="."]
+position = Vector2(109, -46)
+texture = ExtResource("3_nep4o")
+
+[node name="rope2" type="Sprite2D" parent="."]
+position = Vector2(14, -15)
+texture = ExtResource("3_nep4o")
+
+[node name="rope4" type="Sprite2D" parent="."]
+position = Vector2(14, -46)
+texture = ExtResource("3_nep4o")
+
+[connection signal="pressed" from="heartButton" to="." method="_on_heart_button_pressed"]
+[connection signal="pressed" from="dimondButton" to="." method="_on_dimond_button_pressed"]
+[connection signal="pressed" from="clubButton" to="." method="_on_club_button_pressed"]
+[connection signal="pressed" from="spadeButton" to="." method="_on_spade_button_pressed"]

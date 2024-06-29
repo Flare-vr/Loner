@@ -1,0 +1,214 @@
+[gd_scene load_steps=15 format=3 uid="uid://xoaurt15p0cu"]
+
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hmen1"]
+[ext_resource type="Texture2D" uid="uid://cj6nkr4plt2ij" path="res://Assets/Planks.png" id="1_v0xb6"]
+[ext_resource type="PackedScene" uid="uid://cc2m6ftorgpom" path="res://Scenes/candle.tscn" id="4_2plsx"]
+[ext_resource type="PackedScene" uid="uid://c3mn46wc4m1kh" path="res://Scenes/deal_button.tscn" id="4_m5xee"]
+[ext_resource type="PackedScene" uid="uid://oiwh8s2rjesx" path="res://Scenes/trumpControl.tscn" id="5_0neh4"]
+[ext_resource type="PackedScene" uid="uid://btwdpmhm65tq" path="res://Scenes/center_pass.tscn" id="6_vxoj2"]
+[ext_resource type="PackedScene" uid="uid://bow82bnxx0xwi" path="res://Scenes/left_pass.tscn" id="7_hafqx"]
+[ext_resource type="PackedScene" uid="uid://ch0ik6ly8rses" path="res://Scenes/right_pass.tscn" id="8_dksl2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w41w7"]
+texture = ExtResource("1_v0xb6")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bc0yl"]
+tile_size = Vector2i(80, 80)
+sources/0 = SubResource("TileSetAtlasSource_w41w7")
+
+[sub_resource type="Animation" id="Animation_txai3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_6nod3"]
+resource_name = "TrumpPannle"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-64, -150), Vector2(-64, -34), Vector2(-64, -40)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_db3x2"]
+resource_name = "pannleLeave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-64, -40), Vector2(-64, -32), Vector2(-64, -150)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dv0l5"]
+_data = {
+"RESET": SubResource("Animation_txai3"),
+"TrumpPannle": SubResource("Animation_6nod3"),
+"pannleLeave": SubResource("Animation_db3x2")
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_hmen1")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_bc0yl")
+rendering_quadrant_size = 80
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 0, 0, -65536, 0, 0, 0, 0, 0, 65535, 0, 0, -2, 0, 0, 65534, 0, 0, -65535, 0, 0, 1, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, 65537, 0, 0, 65536, 0, 0, 131071, 0, 0, 131070, 0, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(6, 6)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(-16, 21)
+energy = 0.5
+blend_mode = 1
+
+[node name="Deal Button" parent="." instance=ExtResource("4_m5xee")]
+offset_left = 33.0
+offset_top = 23.0
+offset_right = 49.0
+offset_bottom = 51.0
+
+[node name="playerHand" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = -61.0
+offset_top = 25.0
+offset_right = 21.0
+offset_bottom = 51.0
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="FriendlyHand" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = -34.0
+offset_top = -70.0
+offset_right = 34.0
+offset_bottom = -54.0
+
+[node name="Enemy2Hand" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 76.0
+offset_top = -30.0
+offset_right = 96.0
+offset_bottom = 21.0
+
+[node name="Enemy1Hand" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = -92.0
+offset_top = -30.0
+offset_right = -70.0
+offset_bottom = 26.0
+
+[node name="Enemy1Played" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = -36.0
+offset_top = -25.0
+offset_right = -10.0
+offset_bottom = -8.0
+
+[node name="Enemy2Played" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 14.0
+offset_top = -25.0
+offset_right = 40.0
+offset_bottom = -9.0
+
+[node name="PlayerPlayed" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = -11.0
+offset_right = 10.0
+offset_bottom = 16.0
+
+[node name="candle" parent="." instance=ExtResource("4_2plsx")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 49.0
+offset_top = 12.0
+offset_right = 49.0
+offset_bottom = 28.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Control" parent="." instance=ExtResource("5_0neh4")]
+offset_left = 56.0
+offset_top = -58.0
+offset_right = 56.0
+offset_bottom = -58.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dv0l5")
+}
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+
+[node name="centerPass" parent="Node2D" instance=ExtResource("6_vxoj2")]
+position = Vector2(0, -25)
+frame_progress = 0.183487
+
+[node name="LeftPass" parent="Node2D" instance=ExtResource("7_hafqx")]
+position = Vector2(-63, -3)
+
+[node name="rightPass" parent="Node2D" instance=ExtResource("8_dksl2")]
+position = Vector2(60, -2)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="shuffle" from="Deal Button" to="." method="_on_deal_button_shuffle"]
+[connection signal="trumpIsClub" from="Control" to="." method="_on_control_trump_is_club"]
+[connection signal="trumpIsDimonod" from="Control" to="." method="_on_control_trump_is_dimonod"]
+[connection signal="trumpIsHeart" from="Control" to="." method="_on_control_trump_is_heart"]
+[connection signal="trumpIsSpade" from="Control" to="." method="_on_control_trump_is_spade"]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3mn46wc4m1kh"]
+
+[ext_resource type="Texture2D" uid="uid://dv1kb4gqj0nn8" path="res://Assets/Deck.png" id="1_cff5d"]
+[ext_resource type="Script" path="res://Scripts/deal_button.gd" id="2_b5bhy"]
+[ext_resource type="Texture2D" uid="uid://bvf2s0gosdark" path="res://Assets/cardShadow.png" id="3_yx0i6"]
+[ext_resource type="Texture2D" uid="uid://bm2qxvlx2n7qd" path="res://Assets/Health.png" id="4_sse40"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfklc"]
+atlas = ExtResource("4_sse40")
+region = Rect2(0, 0, 16, 24)
+
+[node name="Deal Button" type="TextureButton"]
+offset_right = 16.0
+offset_bottom = 28.0
+texture_normal = ExtResource("1_cff5d")
+script = ExtResource("2_b5bhy")
+
+[node name="shadow" type="Sprite2D" parent="."]
+position = Vector2(8, 12)
+texture = ExtResource("3_yx0i6")
+
+[node name="back card" type="Sprite2D" parent="."]
+position = Vector2(8, 12)
+texture = SubResource("AtlasTexture_qfklc")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

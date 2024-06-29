@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bow82bnxx0xwi"]
+
+[ext_resource type="Texture2D" uid="uid://bh4mpwxw0kr4f" path="res://Assets/pass.png" id="1_xh5nt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7j55w"]
+atlas = ExtResource("1_xh5nt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrcm4"]
+atlas = ExtResource("1_xh5nt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2rum"]
+atlas = ExtResource("1_xh5nt")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dl861"]
+atlas = ExtResource("1_xh5nt")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d7yog"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7j55w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrcm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2rum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dl861")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="LeftPass" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_d7yog")
+autoplay = "default"
+frame_progress = 0.32711

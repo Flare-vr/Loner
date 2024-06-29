@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://ch0ik6ly8rses"]
+
+[ext_resource type="Texture2D" uid="uid://bh4mpwxw0kr4f" path="res://Assets/pass.png" id="1_yhk6u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b6a6"]
+atlas = ExtResource("1_yhk6u")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpsjq"]
+atlas = ExtResource("1_yhk6u")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d8yq"]
+atlas = ExtResource("1_yhk6u")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j433d"]
+atlas = ExtResource("1_yhk6u")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pgldo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2b6a6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpsjq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5d8yq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j433d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="rightPass" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_pgldo")
+autoplay = "default"
+frame_progress = 0.822257
