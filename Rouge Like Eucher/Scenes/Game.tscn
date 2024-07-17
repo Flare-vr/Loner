@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://xoaurt15p0cu"]
+[gd_scene load_steps=51 format=3 uid="uid://xoaurt15p0cu"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_hmen1"]
 [ext_resource type="Texture2D" uid="uid://cj6nkr4plt2ij" path="res://Assets/Planks.png" id="1_v0xb6"]
@@ -15,15 +15,22 @@
 [ext_resource type="AudioStream" uid="uid://d74hq8yx7xml" path="res://Assets/fire.mp3" id="12_favki"]
 [ext_resource type="AudioStream" uid="uid://tt3f5xb0idt1" path="res://Assets/button-press.wav" id="13_sxgka"]
 [ext_resource type="Texture2D" uid="uid://bbtrkqtt3f0ef" path="res://Assets/how to play.png" id="15_44u3p"]
+[ext_resource type="PackedScene" uid="uid://bmb7dbqw5327p" path="res://Scenes/coin.tscn" id="16_3d6kt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w41w7"]
 texture = ExtResource("1_v0xb6")
-texture_region_size = Vector2i(80, 80)
+texture_region_size = Vector2i(52, 80)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a86d4"]
+texture = ExtResource("1_v0xb6")
+texture_region_size = Vector2i(40, 40)
+0:0/size_in_atlas = Vector2i(4, 1)
 0:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_bc0yl"]
-tile_size = Vector2i(80, 80)
+tile_size = Vector2i(40, 40)
 sources/0 = SubResource("TileSetAtlasSource_w41w7")
+sources/1 = SubResource("TileSetAtlasSource_a86d4")
 
 [sub_resource type="Animation" id="Animation_txai3"]
 length = 0.001
@@ -38,10 +45,10 @@ tracks/0/path = NodePath("Control:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.5, 1.5, 2),
+"times": PackedFloat32Array(0, 1.5, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-64, -150), Vector2(-64, -34), Vector2(-64, -40)]
+"values": [Vector2(-64, -200.001), Vector2(-64, -34), Vector2(-64, -40)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -68,7 +75,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-64, -40), Vector2(-64, -32), Vector2(-64, -150)]
+"values": [Vector2(-64, -40), Vector2(-64, -32), Vector2(-64, -200)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dv0l5"]
@@ -189,72 +196,71 @@ fill_to = Vector2(0.986239, 0.981651)
 script = ExtResource("1_hmen1")
 
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2(2, -1)
 tile_set = SubResource("TileSet_bc0yl")
 rendering_quadrant_size = 80
 format = 2
-layer_0/tile_data = PackedInt32Array(-1, 0, 0, -65536, 0, 0, 0, 0, 0, 65535, 0, 0, -2, 0, 0, 65534, 0, 0, -65535, 0, 0, 1, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, 65537, 0, 0, 65536, 0, 0, 131071, 0, 0, 131070, 0, 0)
+layer_0/tile_data = PackedInt32Array(-131076, 1, 0, -65540, 1, 0, -4, 1, 0, 65532, 1, 0, 131068, 1, 0, 196604, 1, 0, 131072, 1, 0, 65536, 1, 0, 0, 1, 0, -65536, 1, 0, -131072, 1, 0, -196608, 1, 0, -196604, 1, 0, -131068, 1, 0, -65532, 1, 0, 4, 1, 0, 65540, 1, 0, 131076, 1, 0)
 
 [node name="candle" parent="." instance=ExtResource("4_2plsx")]
-visible = false
+z_index = 1
 anchors_preset = 0
 anchor_left = 0.0
 anchor_top = 0.0
-anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 49.0
-offset_top = 12.0
-offset_right = 49.0
-offset_bottom = 28.0
+offset_left = 185.0
+offset_top = 66.0
+offset_right = 185.0
+offset_bottom = 66.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(6, 6)
+zoom = Vector2(3, 3)
 
 [node name="Deal Button" parent="." instance=ExtResource("4_m5xee")]
-offset_left = 33.0
-offset_top = 23.0
-offset_right = 49.0
-offset_bottom = 51.0
+offset_left = 72.0
+offset_top = 50.0
+offset_right = 104.0
+offset_bottom = 106.0
 
 [node name="playerHand" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-z_index = 1
-offset_left = -61.0
-offset_top = 25.0
-offset_right = 21.0
-offset_bottom = 51.0
-theme_override_constants/separation = 15
+z_index = 2
+offset_left = -95.0
+offset_top = 51.0
+offset_right = -13.0
+offset_bottom = 77.0
+theme_override_constants/separation = 25
 alignment = 1
 
 [node name="FriendlyHand" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-offset_left = -34.0
-offset_top = -70.0
-offset_right = 34.0
-offset_bottom = -54.0
+offset_left = -77.0
+offset_top = -117.0
+offset_right = -9.0
+offset_bottom = -101.0
 
 [node name="Enemy2Hand" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
-z_index = 1
-offset_left = 76.0
-offset_top = -30.0
-offset_right = 96.0
-offset_bottom = 21.0
+offset_left = 175.0
+offset_top = -42.0
+offset_right = 195.0
+offset_bottom = 9.0
 
 [node name="Enemy1Hand" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
-z_index = 1
-offset_left = -92.0
-offset_top = -30.0
-offset_right = -70.0
-offset_bottom = 26.0
+offset_left = -182.0
+offset_top = -55.0
+offset_right = -160.0
+offset_bottom = 1.0
 
 [node name="Enemy1Played" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-offset_left = -26.0
-offset_top = -25.0
-offset_bottom = -8.0
+offset_left = -49.0
+offset_top = -26.0
+offset_right = -23.0
+offset_bottom = -9.0
 theme_override_constants/separation = -2
 
 [node name="Enemy2Played" type="HBoxContainer" parent="."]
@@ -267,17 +273,18 @@ theme_override_constants/separation = -2
 
 [node name="PlayerPlayed" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-offset_left = -2.0
-offset_right = 19.0
-offset_bottom = 16.0
+offset_left = -14.0
+offset_top = 3.0
+offset_right = 7.0
+offset_bottom = 19.0
 theme_override_constants/separation = -2
 
 [node name="Control" parent="." instance=ExtResource("5_0neh4")]
 z_index = 10
-offset_left = 242.0
-offset_top = -40.0
-offset_right = 242.0
-offset_bottom = -40.0
+offset_left = 411.0
+offset_top = -39.0
+offset_right = 411.0
+offset_bottom = -39.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -303,7 +310,7 @@ position = Vector2(60, -2)
 [node name="Timer" type="Timer" parent="."]
 
 [node name="click here" type="Sprite2D" parent="."]
-position = Vector2(16, 35)
+position = Vector2(53, 66)
 texture = SubResource("AtlasTexture_evbxn")
 
 [node name="title" type="Sprite2D" parent="."]
@@ -313,50 +320,60 @@ texture = SubResource("AtlasTexture_81o4j")
 
 [node name="youwon" type="Sprite2D" parent="."]
 visible = false
+z_index = 2
 position = Vector2(7, -32)
 texture = SubResource("AtlasTexture_huski")
 
 [node name="youlost" type="Sprite2D" parent="."]
 visible = false
+z_index = 2
 position = Vector2(7, -32)
 texture = SubResource("AtlasTexture_8bim1")
 
 [node name="notLead" type="Sprite2D" parent="."]
 visible = false
+z_index = 2
 position = Vector2(-12, 16)
 texture = SubResource("AtlasTexture_nj4vn")
 
 [node name="RoundWon" type="Sprite2D" parent="."]
 visible = false
+z_index = 2
 texture = SubResource("AtlasTexture_cg4k3")
 
 [node name="RoundLost" type="Sprite2D" parent="."]
 visible = false
+z_index = 2
 texture = SubResource("AtlasTexture_qtwq5")
 
 [node name="playerTurn" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(6, -29)
+z_index = 2
+position = Vector2(2, -30)
 texture = SubResource("AtlasTexture_00qxq")
 
 [node name="trumpHeart" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(68, 12)
+z_index = 2
+position = Vector2(88, 46)
 texture = SubResource("AtlasTexture_12hfm")
 
 [node name="trumpdimond" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(68, 12)
+z_index = 2
+position = Vector2(88, 46)
 texture = SubResource("AtlasTexture_5qmx7")
 
 [node name="trumpclub" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(69, 12)
+z_index = 2
+position = Vector2(88, 46)
 texture = SubResource("AtlasTexture_e03re")
 
 [node name="trumpspade" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(68, 12)
+z_index = 2
+position = Vector2(88, 46)
 texture = SubResource("AtlasTexture_gqjsb")
 
 [node name="leadheart" type="Sprite2D" parent="."]
@@ -418,42 +435,66 @@ offset_bottom = 54.0
 icon = SubResource("AtlasTexture_55pvx")
 
 [node name="Side Button out" type="TextureButton" parent="."]
-offset_left = 89.0
-offset_top = -45.0
-offset_right = 96.0
-offset_bottom = -35.0
+offset_left = 185.0
+offset_top = -80.0
+offset_right = 192.0
+offset_bottom = -70.0
 texture_normal = SubResource("AtlasTexture_g26jo")
 texture_pressed = SubResource("AtlasTexture_xu7ud")
 
 [node name="side bar" type="Sprite2D" parent="."]
 visible = false
 z_index = 30
-position = Vector2(75, -1)
+position = Vector2(171, -35)
 texture = SubResource("AtlasTexture_313js")
 
 [node name="Side button in" type="TextureButton" parent="."]
 visible = false
 z_index = 15
-offset_left = 47.0
-offset_top = -45.0
-offset_right = 54.0
-offset_bottom = -35.0
+offset_left = 143.0
+offset_top = -80.0
+offset_right = 150.0
+offset_bottom = -70.0
 texture_normal = SubResource("AtlasTexture_5pyn8")
 texture_pressed = SubResource("AtlasTexture_f77dm")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(2.38419e-07, -0.5)
-scale = Vector2(5, 5.14063)
-energy = 0.84
+position = Vector2(-2, -3)
+scale = Vector2(6.125, 3.53125)
+energy = 0.38
 blend_mode = 1
 range_z_max = 9
 texture = SubResource("GradientTexture2D_lvi1b")
 
 [node name="Candle" parent="." instance=ExtResource("4_2plsx")]
-offset_left = 54.0
-offset_top = 9.0
-offset_right = 88.72
-offset_bottom = 35.672
+visible = false
+offset_left = 90.0
+offset_top = 24.0
+offset_right = 124.72
+offset_bottom = 50.672
+
+[node name="coinStack" type="Control" parent="."]
+unique_name_in_owner = true
+y_sort_enabled = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -117.0
+offset_top = 53.0
+offset_right = -77.0
+offset_bottom = 93.0
+scale = Vector2(1, -1)
+
+[node name="coin" parent="coinStack" instance=ExtResource("16_3d6kt")]
+offset_left = 52.0
+offset_top = 1.0
+offset_right = 52.0
+offset_bottom = 22.0
+
+[node name="coin2" parent="coinStack" instance=ExtResource("16_3d6kt")]
+offset_left = -38.0
+offset_top = 3.0
+offset_right = -38.0
+offset_bottom = 24.0
 
 [connection signal="reShuffle" from="." to="Deal Button" method="_on_game_re_shuffle"]
 [connection signal="shuffle" from="Deal Button" to="." method="_on_deal_button_shuffle"]

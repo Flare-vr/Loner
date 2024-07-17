@@ -2,6 +2,7 @@ extends Node2D
 
 signal reShuffle
 const CARDS = preload("res://Scenes/card_control.tscn")
+const COIN = preload("res://Scenes/coin.tscn")
 @onready var player_turn = $playerTurn
 @onready var animation_player = $AnimationPlayer
 @onready var notlead = $notLead
@@ -160,15 +161,8 @@ func _on_control_trump_is_heart():
 	button_press.play()
 	trump = ['heart', 'red']
 	animation_player.queue("pannleLeave")
-	
-	#for i in range(enemy1Hand.size()):
-		#print('enemy1 hand:' + enemy1Hand[i][4])
-	#print('')
-	#for i in range(enemy2Hand.size()):
-		#print('enemy2 hand:' + enemy2Hand[i][4])
 	dimondJackCard[2] = 'heart'
 	dimondJackCard[3] -=1
-	print('test1')
 	trumpheart.visible = true
 	gameLoopP1()
 
@@ -177,15 +171,10 @@ func _on_control_trump_is_dimonod():
 	button_press.play()
 	trump = ['dimond', 'red']
 	animation_player.queue("pannleLeave")
-	#for i in range(enemy1Hand.size()):
-		#print('enemy1 hand:' + enemy1Hand[i][4])
-	#print('')
-	#for i in range(enemy2Hand.size()):
-		#print('enemy2 hand:' + enemy2Hand[i][4])
 	heartJackCard[2] = 'dimond'
 	heartJackCard[3] -=1
 	trumpdimond.visible = true
-	print('test1')
+
 	gameLoopP1()
 
 
@@ -193,15 +182,9 @@ func _on_control_trump_is_club():
 	button_press.play()
 	trump = ['club', 'black']
 	animation_player.queue("pannleLeave")
-	#for i in range(enemy1Hand.size()):
-		#print('enemy1 hand:' + enemy1Hand[i][4])
-	#print('')
-	#for i in range(enemy2Hand.size()):
-		#print('enemy2 hand:' + enemy2Hand[i][4])
 	spadeJackCard[2] = 'club'
 	spadeJackCard[3] -=1
 	trumpclub.visible = true
-	print('test1')
 	gameLoopP1()
 
 
@@ -209,27 +192,20 @@ func _on_control_trump_is_spade():
 	button_press.play()
 	trump = ['spade', 'black']
 	animation_player.queue("pannleLeave")
-	#for i in range(enemy1Hand.size()):
-		#print('enemy1 hand:' + enemy1Hand[i][4])
-	#print('')
-	#for i in range(enemy2Hand.size()):
-		#print('enemy2 hand:' + enemy2Hand[i][4])
 	clubJackCard[2] = 'spade'
 	clubJackCard[3] -=1
 	trumpspade.visible = true
-	print('test1')
 	gameLoopP1()
 
 
 func enemy1AI():
 	card_slide.play()
-	print('test3')
 	var e1cardRank = []
 	for i in (enemy1Hand.size()):
 		e1cardRank.append(1)
 	if lead[0] == 'none':
 		for i in (enemy1Hand.size()):
-			if enemy1Hand[i][0]=='jack' and enemy1Hand[i][2]== trump[0]:
+			if enemy1Hand[i][0]=='jack' and enemy1Hand[i][2]== trump[0] and enemy2Hand[i][3] == 11:
 				e1cardRank[i]*= 3
 			elif enemy1Hand[i][2] != trump[0]:
 				e1cardRank[i] *= 2
@@ -238,7 +214,7 @@ func enemy1AI():
 	else:
 		for i in range(enemy1Hand.size()):
 			if enemy1Hand[i][2]== lead[0]:
-				e1cardRank[i]*=5
+				e1cardRank[i]*=10
 			if enemy1Hand[i][0]=='jack' and enemy1Hand[i][2]== trump[0]:
 				e1cardRank[i]*= 4
 			elif enemy1Hand[i][0]=='jack' and enemy1Hand[i][1]== trump[1]:
@@ -267,13 +243,12 @@ func enemy1AI():
 	
 func enemy2AI():
 	card_slide.play()
-	print('test4')
 	var e2cardRank = []
 	for i in (enemy2Hand.size()):
 		e2cardRank.append(1)
 	if lead[0] == 'none':
 		for i in (enemy2Hand.size()):
-			if enemy2Hand[i][0]=='jack' and enemy2Hand[i][2]== trump[0]:
+			if enemy2Hand[i][0]=='jack' and enemy2Hand[i][2]== trump[0] and enemy2Hand[i][3] == 11:
 				e2cardRank[i]*= 3
 			elif enemy2Hand[i][2] != trump[0]:
 				e2cardRank[i] *= 2
@@ -282,7 +257,7 @@ func enemy2AI():
 	else:
 		for i in range(enemy2Hand.size()):
 			if enemy2Hand[i][2]== lead[0]:
-				e2cardRank[i]*=5
+				e2cardRank[i]*=10
 			if enemy2Hand[i][0]=='jack' and enemy2Hand[i][2]== trump[0]:
 				e2cardRank[i]*= 4
 			elif enemy2Hand[i][0]=='jack' and enemy2Hand[i][1]== trump[1]:
@@ -310,7 +285,6 @@ func enemy2AI():
 	
 	
 func gameLoopP1():
-	print('test2')
 	var player = CARDS.instantiate()
 	if lead[1] == 'enemy1' or lead[1] == 'none':
 		await get_tree().create_timer(.5).timeout
@@ -348,6 +322,8 @@ func _on_cards_card_chosen(names, color, suit, value, sprite, rotated, newowner)
 		await get_tree().create_timer(.5).timeout
 		notlead.visible = false 
 	else:
+		if lead[0] == 'none':
+			lead[0] = playerPlayedCard[2]
 		playerHand.remove_at(playerHand.find(playerPlayedCard))
 		removeChild(%playerHand)
 		for i in range (playerHand.size()):
@@ -357,8 +333,7 @@ func _on_cards_card_chosen(names, color, suit, value, sprite, rotated, newowner)
 		var newCard = CARDS.instantiate()
 		%PlayerPlayed.add_child(newCard)
 		newCard.setCard(playerPlayedCard[0],playerPlayedCard[1],playerPlayedCard[2],playerPlayedCard[3],playerPlayedCard[4],0, 'game')
-		if lead[0] != 'none':
-			lead[0] = playerPlayedCard[2]
+		
 		gameLoopP2()
 
 func gameLoopP2():
@@ -442,11 +417,15 @@ func calculate(pCardn, pCardc, pCards, pCardv, e1Cardn, e1Cardc, e1Cards, e1Card
 			roundPoints+=1
 	if roundPoints >= 5:
 		if pRoundPoints==5:
-			gamePoints+=4
+			for num in range(4):
+				var newCoin = COIN.instantiate()
+				%coinStack.add_child(newCoin)
 			round_won.visible = true
 			await get_tree().create_timer(1.5).timeout
 			round_won.visible = false
 		elif pRoundPoints >=3:
+			var newCoin = COIN.instantiate()
+			%coinStack.add_child(newCoin)
 			gamePoints+= 1
 			round_won.visible = true
 			await get_tree().create_timer(1.5).timeout
@@ -457,6 +436,7 @@ func calculate(pCardn, pCardc, pCards, pCardv, e1Cardn, e1Cardc, e1Cards, e1Card
 			await get_tree().create_timer(1).timeout
 			round_lost.visible = false
 		lead = ['none', 'none']
+		pRoundPoints = 0
 		roundPoints = 0
 		removeChild(%playerHand)
 		removeChild(%FriendlyHand)
@@ -470,11 +450,13 @@ func calculate(pCardn, pCardc, pCards, pCardv, e1Cardn, e1Cardc, e1Cards, e1Card
 		trumpdimond.visible = false
 		trumpclub.visible = false
 		trumpspade.visible = false
+		spadeJackCard = ['jack', 'black', 'spade', 11, 'spadeJack']
+		clubJackCard = ['jack', 'black', 'club', 11, 'clubJack']
+		heartJackCard = ['jack', 'red', 'heart', 11, 'heartJack']
+		dimondJackCard = ['jack', 'red', 'dimond', 11, 'dimondJack']
 		reShuffle.emit()
 		
 	else:
-		print('test5 reset')
-		print(lead)
 		gameLoopP1()
 			
 

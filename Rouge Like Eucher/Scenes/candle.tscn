@@ -1,36 +1,62 @@
-[gd_scene load_steps=9 format=3 uid="uid://cc2m6ftorgpom"]
+[gd_scene load_steps=18 format=3 uid="uid://cc2m6ftorgpom"]
 
 [ext_resource type="Texture2D" uid="uid://cd4n3upeqq64k" path="res://Assets/candle.png" id="1_kxtvh"]
 [ext_resource type="Script" path="res://Scripts/candle.gd" id="1_mwkcq"]
+[ext_resource type="Texture2D" uid="uid://d4m6fvkmuhuhk" path="res://Assets/candleShadow.png" id="2_em4uu"]
+[ext_resource type="AudioStream" uid="uid://dndpdoitnbrot" path="res://Assets/dropSound.mp3" id="4_nqae0"]
+[ext_resource type="AudioStream" uid="uid://batgrtnibev6u" path="res://Assets/pickUpSound.mp3" id="5_pm1iv"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xng5q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y52v"]
 atlas = ExtResource("1_kxtvh")
-region = Rect2(0, 0, 48, 48)
+region = Rect2(96, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pbwmo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8mpj"]
 atlas = ExtResource("1_kxtvh")
-region = Rect2(48, 0, 48, 48)
+region = Rect2(0, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ps7cd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7dec"]
 atlas = ExtResource("1_kxtvh")
-region = Rect2(96, 0, 48, 48)
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hwtka"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xng5q")
+"texture": SubResource("AtlasTexture_2y52v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pbwmo")
+"texture": SubResource("AtlasTexture_s8mpj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ps7cd")
+"texture": SubResource("AtlasTexture_r7dec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2y52v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8mpj")
 }],
 "loop": true,
 "name": &"default",
 "speed": 10.0
 }]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cq4rq"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 12.51
+velocity_pivot = Vector3(0, -1, 0)
+direction = Vector3(0, -1, 0)
+spread = 16.18
+initial_velocity_min = 56.18
+initial_velocity_max = 112.36
+gravity = Vector3(0, 0, 0)
+turbulence_enabled = true
+turbulence_noise_scale = 2.264
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30762"]
+atlas = ExtResource("1_kxtvh")
+region = Rect2(39, 8, 3, 3)
 
 [sub_resource type="Gradient" id="Gradient_lk82f"]
 offsets = PackedFloat32Array(0, 0.707792)
@@ -41,27 +67,239 @@ gradient = SubResource("Gradient_lk82f")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Animation" id="Animation_q5psq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../candleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../candleSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../pickup:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../drop:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../candleSprite:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_la6eh"]
+resource_name = "pickUp"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../candleSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.282743, -0.20944, -0.279253]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../candleSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 20), Vector2(0, -1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../pickup:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../candleSprite:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_k0hmw"]
+resource_name = "place"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../candleSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 20), Vector2(0, 17), Vector2(0, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../candleSprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-0.279253, 0.0, 0.0523599, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../drop:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../candleSprite:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_46bhm"]
+_data = {
+"RESET": SubResource("Animation_q5psq"),
+"pickUp": SubResource("Animation_la6eh"),
+"place": SubResource("Animation_k0hmw")
+}
+
 [node name="Candle" type="Control"]
+y_sort_enabled = true
 layout_mode = 3
-anchor_left = 0.027
-anchor_top = 0.03
-anchor_right = 0.042
-anchor_bottom = 0.066
-offset_left = -31.104
-offset_top = -19.44
-offset_right = 3.616
-offset_bottom = 7.232
+anchor_left = -0.065
+anchor_top = -0.083
+anchor_bottom = 0.042
+offset_left = 74.88
+offset_top = 53.784
+offset_bottom = -27.216
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mwkcq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(24, 24)
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-34, 6)
+texture = ExtResource("2_em4uu")
+
+[node name="candleSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 20)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="candleSprite"]
+position = Vector2(-35, -14)
 sprite_frames = SubResource("SpriteFrames_hwtka")
 autoplay = "default"
+frame_progress = 0.722207
 
-[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
-position = Vector2(-3, -15)
-scale = Vector2(5.5, 5.5)
+[node name="GPUParticles2D" type="GPUParticles2D" parent="candleSprite/AnimatedSprite2D"]
+position = Vector2(-8, -32)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_cq4rq")
+texture = SubResource("AtlasTexture_30762")
+lifetime = 0.5
+
+[node name="PointLight2D" type="PointLight2D" parent="candleSprite/AnimatedSprite2D"]
+position = Vector2(-10, -32)
+scale = Vector2(5.0625, 2.90625)
 color = Color(0.985293, 0.726121, 0.426466, 1)
 texture = SubResource("GradientTexture2D_si4ai")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../TextureButton")
+libraries = {
+"": SubResource("AnimationLibrary_46bhm")
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = -83.0
+offset_top = -57.0
+offset_right = 17.0
+offset_bottom = 34.0
+
+[node name="drop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_nqae0")
+volume_db = -16.104
+pitch_scale = 0.82
+
+[node name="pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pm1iv")
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]
+[connection signal="button_up" from="TextureButton" to="." method="_on_texture_button_button_up"]

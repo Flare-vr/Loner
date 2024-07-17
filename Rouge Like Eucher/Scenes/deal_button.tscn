@@ -7,20 +7,21 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfklc"]
 atlas = ExtResource("4_sse40")
-region = Rect2(0, 0, 16, 24)
+region = Rect2(0, 0, 32, 48)
 
 [node name="Deal Button" type="TextureButton"]
-offset_right = 16.0
-offset_bottom = 28.0
+offset_top = -3.0
+offset_right = 32.0
+offset_bottom = 53.0
 texture_normal = ExtResource("1_cff5d")
 script = ExtResource("2_b5bhy")
 
 [node name="shadow" type="Sprite2D" parent="."]
-position = Vector2(8, 12)
+position = Vector2(16, 28)
 texture = ExtResource("3_yx0i6")
 
 [node name="back card" type="Sprite2D" parent="."]
-position = Vector2(8, 12)
+position = Vector2(16, 27)
 texture = SubResource("AtlasTexture_qfklc")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
